@@ -11,6 +11,8 @@
 		E7745B552C25692400E584D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B542C25692400E584D3 /* ContentView.swift */; };
 		E7745B572C25692600E584D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7745B562C25692600E584D3 /* Assets.xcassets */; };
 		E7745B5A2C25692600E584D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7745B592C25692600E584D3 /* Preview Assets.xcassets */; };
+		E7745B612C258BEA00E584D3 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B602C258BEA00E584D3 /* ToDoItem.swift */; };
+		E7745B632C258DE400E584D3 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B622C258DE400E584D3 /* FileCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		E7745B542C25692400E584D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E7745B562C25692600E584D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E7745B592C25692600E584D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E7745B602C258BEA00E584D3 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
+		E7745B622C258DE400E584D3 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,8 @@
 			isa = PBXGroup;
 			children = (
 				E7745B522C25692400E584D3 /* ToDoAppApp.swift */,
+				E7745B602C258BEA00E584D3 /* ToDoItem.swift */,
+				E7745B622C258DE400E584D3 /* FileCache.swift */,
 				E7745B542C25692400E584D3 /* ContentView.swift */,
 				E7745B562C25692600E584D3 /* Assets.xcassets */,
 				E7745B582C25692600E584D3 /* Preview Content */,
@@ -139,6 +145,8 @@
 			files = (
 				E7745B552C25692400E584D3 /* ContentView.swift in Sources */,
 				E7745B532C25692400E584D3 /* ToDoAppApp.swift in Sources */,
+				E7745B632C258DE400E584D3 /* FileCache.swift in Sources */,
+				E7745B612C258BEA00E584D3 /* ToDoItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
