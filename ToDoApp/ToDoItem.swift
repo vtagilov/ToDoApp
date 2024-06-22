@@ -106,7 +106,9 @@ extension TodoItem {
             text.insert("\"", at: text.startIndex)
             text.append("\"")
         }
-        return "\(id),\(text),\(isDone.description),\(importance.rawValue),\(creationDate.description),\(deadline?.description ?? ""),\(editedDate?.description ?? "")"
+        let deadline = deadline == nil ? " " : "\(deadline!.timeIntervalSince1970)"
+        let editedDate = editedDate == nil ? " " : "\(editedDate!.timeIntervalSince1970)"
+        return "\(id),\(text),\(isDone.description),\(importance.rawValue),\(creationDate.timeIntervalSince1970),\(deadline),\(editedDate)"
     }
     
     static func parse(csv: String) -> TodoItem? {
@@ -114,7 +116,8 @@ extension TodoItem {
         
         if columns.count < 7 {
             return nil
-        } else if columns.count > 7 {
+        } else 
+        if columns.count > 7 {
             let id = columns[0]
             var text = "\(columns[1]),"
             
@@ -134,8 +137,8 @@ extension TodoItem {
             let isDone = Bool(columns[index]) ?? false
             let importance = Importance(rawValue: columns[index + 1]) ?? .common
             let creationDate = Date(timeIntervalSince1970: TimeInterval(columns[index + 2]) ?? 0)
-            let deadline = columns[index + 3].isEmpty ? nil : Date(timeIntervalSince1970: TimeInterval(columns[index + 3]) ?? 0)
-            let editedDate = columns[index + 4].isEmpty ? nil : Date(timeIntervalSince1970: TimeInterval(columns[index + 4]) ?? 0)
+            let deadline = columns[index + 3] == " " ? nil : Date(timeIntervalSince1970: TimeInterval(columns[index + 3]) ?? 0)
+            let editedDate = columns[index + 4] == " " ? nil : Date(timeIntervalSince1970: TimeInterval(columns[index + 4]) ?? 0)
             return TodoItem(id: id, text: text, importance: importance, isDone: isDone, creationDate: creationDate, deadline: deadline, editedDate: editedDate)
         }
         
@@ -144,8 +147,8 @@ extension TodoItem {
         let isDone = Bool(columns[2]) ?? false
         let importance = Importance(rawValue: columns[3]) ?? .common
         let creationDate = Date(timeIntervalSince1970: TimeInterval(columns[4]) ?? 0)
-        let deadline = columns[5].isEmpty ? nil : Date(timeIntervalSince1970: TimeInterval(columns[5]) ?? 0)
-        let editedDate = columns[6].isEmpty ? nil : Date(timeIntervalSince1970: TimeInterval(columns[6]) ?? 0)
+        let deadline = columns[5] == " " ? nil : Date(timeIntervalSince1970: TimeInterval(columns[5]) ?? 0)
+        let editedDate = columns[6] == " " ? nil : Date(timeIntervalSince1970: TimeInterval(columns[6]) ?? 0)
         return TodoItem(id: id, text: text, importance: importance, isDone: isDone, creationDate: creationDate, deadline: deadline, editedDate: editedDate)
     }
 }
