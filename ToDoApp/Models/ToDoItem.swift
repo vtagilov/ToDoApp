@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TodoItem: Codable {
+struct TodoItem: Identifiable {
     enum Importance: String, Codable {
         case notImportant = "notImportant"
         case common = "common"
