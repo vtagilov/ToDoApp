@@ -37,7 +37,7 @@ struct OptionsView: View {
             Spacer()
             Picker("", selection: $importance) {
                 Image(systemName: "arrow.down")
-                    .tag(TodoItem.Importance.notImportant)
+                    .tag(TodoItem.Importance.unimportant)
                     .frame(width: 16, height: 20)
                 Text("нет")
                     .tag(TodoItem.Importance.common)

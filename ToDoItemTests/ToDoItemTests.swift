@@ -123,7 +123,7 @@ final class ToDoItemTests: XCTestCase {
         XCTAssertFalse(item1.isDone)
         XCTAssertEqual(item1.creationDate.timeIntervalSince1970, date.timeIntervalSince1970)
         XCTAssertEqual(item1.deadline?.timeIntervalSince1970, date.addingTimeInterval(10000).timeIntervalSince1970)
-        XCTAssertEqual(item1.editedDate, date)
+        XCTAssertEqual(item1.editedDate?.timeIntervalSince1970, date.timeIntervalSince1970)
         
         let json2: [String: Any] = [
             "id": "74115",
@@ -140,7 +140,7 @@ final class ToDoItemTests: XCTestCase {
         XCTAssertEqual(item2.text, "second Task")
         XCTAssertEqual(item2.importance, .common)
         XCTAssertTrue(item2.isDone)
-        XCTAssertEqual(item2.creationDate, date)
+        XCTAssertEqual(item2.creationDate.timeIntervalSince1970, date.timeIntervalSince1970)
         XCTAssertNil(item2.deadline)
         XCTAssertNil(item2.editedDate)
         

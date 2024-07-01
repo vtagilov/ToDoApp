@@ -93,9 +93,8 @@ extension FileCache {
 
 extension FileCache {
     private func saveItemsToCSVFile(_ fileName: String) {
-        let csvHeader = "id,text,isDone,importance,creationDate,deadline,editedDate\n"
         let csvObjects = items.map { $0.csv }.joined(separator: "\n")
-        let csvString = csvHeader + csvObjects
+        let csvString = TodoItem.csvHeader + csvObjects
         guard let directoryPath = cacheDirectory else {
             print("Caches directory does not exist")
             return
