@@ -45,8 +45,7 @@ struct ItemView: View {
                         HStack {
                             Image(systemName: "calendar")
                                 .foregroundStyle(Color.Label.Tertiary.color)
-                            
-                            Text(DateConverter.convertToStringDayMonthYear(deadline))
+                            Text(DateFormatter.convertToStringDayMonthYear(deadline))
                                 .foregroundStyle(Color.Label.Tertiary.color)
                         }
                     }

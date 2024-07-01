@@ -56,26 +56,29 @@ struct OptionsView: View {
     var deadlineView: some View {
         VStack {
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     Text("Сделать до")
-                        .padding(.trailing)
                     if let deadline = deadline, isDeadlineDefined {
-                        Text(DateConverter.convertToStringDayMonthYear(deadline))
-                            .frame(alignment: .leading)
+                        Text(DateFormatter.convertToStringDayMonthYear(deadline))
                             .foregroundStyle(Color.Palette.Blue.color)
+                            .transition(.opacity)
                     }
                 }
                 .onTapGesture {
                     if isDeadlineDefined {
-                        isCalendarHidden.toggle()
+                        withAnimation {
+                            isCalendarHidden.toggle()
+                        }
                     }
                 }
                 Spacer()
                 Toggle("", isOn: $isDeadlineDefined)
                     .onChange(of: isDeadlineDefined) {
-                        isSaveButtonAvailable = true
-                        if deadline == nil {
-                            deadline = Date().addingTimeInterval(86400)
+                        withAnimation {
+                            isSaveButtonAvailable = true
+                            if deadline == nil {
+                                deadline = Date().addingTimeInterval(86400)
+                            }
                         }
                     }
             }
@@ -97,6 +100,8 @@ struct OptionsView: View {
                 .labelsHidden()
             }
         }
+        .animation(.easeInOut, value: isDeadlineDefined)
+        .animation(.easeInOut, value: isCalendarHidden)
     }
     
     var deleteButton: some View {
