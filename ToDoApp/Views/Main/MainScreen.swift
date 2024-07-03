@@ -95,7 +95,7 @@ struct MainScreen: View {
                 }
             } header: {
                 SubtitleView(
-                    itemsCounter: isComplitedHidden ? viewModel.uncompletedItems.count : viewModel.items.count,
+                    itemsCounter: viewModel.items.count - viewModel.uncompletedItems.count,
                     isComplitedHidden: $isComplitedHidden
                 )
             }
@@ -108,7 +108,6 @@ struct MainScreen: View {
 }
 
 private struct SwipeModifier: ViewModifier {
-    
     let markItemAsDone: () -> Void
     let removeItem: () -> Void
     let selectItem: () -> Void
@@ -137,6 +136,7 @@ private struct SwipeModifier: ViewModifier {
                 } label: {
                     Image(systemName: "info.circle.fill")
                 }
+                .tint(Color.Palette.GrayLight.light)
             }
     }
 }

@@ -16,8 +16,12 @@ struct NewItemButton: View {
             Image(systemName: "plus.circle.fill")
                 .resizable()
                 .frame(width: 44, height: 44)
-                .foregroundColor(.blue)
-                .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 8)
+                .foregroundColor(Color.Palette.Blue.color)
+                .background(
+                    Circle()
+                        .foregroundStyle(Color.Palette.White.color)
+                )
+                .shadow(color: Color.Palette.Blue.color.opacity(0.2), radius: 8, x: 0, y: 8)
         }
     }
 }

@@ -26,7 +26,6 @@ struct DetailScreen: View {
             ScrollView {
                 VStack {
                     textEditor
-                        .primaryBackground()
                     OptionsView(importance: $importance,
                                 isSaveButtonAvailable: $isSaveButtonAvailable,
                                 deadline: $deadline,
@@ -63,7 +62,8 @@ struct DetailScreen: View {
                                             text: text,
                                             importance: importance,
                                             isDone: item?.isDone ?? false,
-                                            creationDate: item?.creationDate ?? Date()
+                                            creationDate: item?.creationDate ?? Date(),
+                                            deadline: deadline
                                            )
                                            saveAction(newItem)
                                            dismiss()
@@ -85,17 +85,20 @@ struct DetailScreen: View {
         ZStack(alignment: .topLeading) {
             TextEditor(text: $text)
                 .frame(minHeight: 120, maxHeight: .infinity)
+                .scrollContentBackground(.hidden)
                 .onChange(of: text, { _, newValue in
                     isSaveButtonAvailable = !newValue.isEmpty
                 })
-                .padding(.top, -8)
-                .padding(.leading, -6)
+                .padding(.vertical, -8)
+                .padding(.horizontal, -6)
             if text.isEmpty {
                 Text("Что надо сделать?")
                     .foregroundColor(Color.Palette.Gray.color)
                     .allowsHitTesting(false)
             }
         }
+        .primaryBackground()
+        .padding(.bottom, -16)
     }
 }
 

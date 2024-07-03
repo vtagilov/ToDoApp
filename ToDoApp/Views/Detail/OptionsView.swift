@@ -74,11 +74,14 @@ struct OptionsView: View {
                 Spacer()
                 Toggle("", isOn: $isDeadlineDefined)
                     .onChange(of: isDeadlineDefined) {
+                        if deadline == nil {
+                            deadline = Date().addingTimeInterval(86400)
+                        }
+                        if !isDeadlineDefined {
+                            deadline = nil
+                        }
                         withAnimation {
                             isSaveButtonAvailable = true
-                            if deadline == nil {
-                                deadline = Date().addingTimeInterval(86400)
-                            }
                         }
                     }
             }
@@ -112,7 +115,7 @@ struct OptionsView: View {
                 .foregroundColor(Color.Palette.Red.color)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.Palette.White.color)
+                .background(Color.Back.Secondary.color)
                 .cornerRadius(8)
         })
         .padding(.horizontal)
