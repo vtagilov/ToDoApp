@@ -13,7 +13,7 @@ import SwiftUI
 }
 
 struct ItemView: View {
-    @Binding var item: TodoItem
+    var item: TodoItem
     @State var isDone: Bool = false
     @State var importance: TodoItem.Importance = .common
     
@@ -45,8 +45,7 @@ struct ItemView: View {
                         HStack {
                             Image(systemName: "calendar")
                                 .foregroundStyle(Color.Label.Tertiary.color)
-                            
-                            Text(DateConverter.convertToStringDayMonthYear(deadline))
+                            Text(DateFormatter.convertToStringDayMonthYear(deadline))
                                 .foregroundStyle(Color.Label.Tertiary.color)
                         }
                     }

@@ -13,7 +13,7 @@ extension View {
         return self
             .background(
                 RoundedRectangle(cornerRadius: 16.0)
-                    .fill(Color.white)
+                    .fill(Color.Back.Secondary.color)
                     .padding(-16)
             )
             .padding(32)

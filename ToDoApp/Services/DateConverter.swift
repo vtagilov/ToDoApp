@@ -7,17 +7,18 @@
 
 import Foundation
 
-class DateConverter {
+extension DateFormatter {
     static func convertToStringDayMonth(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMMM"
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        return dateFormatter.string(from: date)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMMM"
+        formatter.locale = Locale(identifier: "ru_RU")
+        return formatter.string(from: date)
     }
+    
     static func convertToStringDayMonthYear(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMMM yyyy"
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        return dateFormatter.string(from: date)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMMM yyyy"
+        formatter.locale = Locale(identifier: "ru_RU")
+        return formatter.string(from: date)
     }
 }

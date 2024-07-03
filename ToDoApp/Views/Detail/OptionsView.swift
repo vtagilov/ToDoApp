@@ -37,7 +37,7 @@ struct OptionsView: View {
             Spacer()
             Picker("", selection: $importance) {
                 Image(systemName: "arrow.down")
-                    .tag(TodoItem.Importance.notImportant)
+                    .tag(TodoItem.Importance.unimportant)
                     .frame(width: 16, height: 20)
                 Text("нет")
                     .tag(TodoItem.Importance.common)
@@ -56,26 +56,32 @@ struct OptionsView: View {
     var deadlineView: some View {
         VStack {
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     Text("Сделать до")
-                        .padding(.trailing)
                     if let deadline = deadline, isDeadlineDefined {
-                        Text(DateConverter.convertToStringDayMonthYear(deadline))
-                            .frame(alignment: .leading)
+                        Text(DateFormatter.convertToStringDayMonthYear(deadline))
                             .foregroundStyle(Color.Palette.Blue.color)
+                            .transition(.opacity)
                     }
                 }
                 .onTapGesture {
                     if isDeadlineDefined {
-                        isCalendarHidden.toggle()
+                        withAnimation {
+                            isCalendarHidden.toggle()
+                        }
                     }
                 }
                 Spacer()
                 Toggle("", isOn: $isDeadlineDefined)
                     .onChange(of: isDeadlineDefined) {
-                        isSaveButtonAvailable = true
                         if deadline == nil {
                             deadline = Date().addingTimeInterval(86400)
+                        }
+                        if !isDeadlineDefined {
+                            deadline = nil
+                        }
+                        withAnimation {
+                            isSaveButtonAvailable = true
                         }
                     }
             }
@@ -97,6 +103,8 @@ struct OptionsView: View {
                 .labelsHidden()
             }
         }
+        .animation(.easeInOut, value: isDeadlineDefined)
+        .animation(.easeInOut, value: isCalendarHidden)
     }
     
     var deleteButton: some View {
@@ -107,7 +115,7 @@ struct OptionsView: View {
                 .foregroundColor(Color.Palette.Red.color)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.Palette.White.color)
+                .background(Color.Back.Secondary.color)
                 .cornerRadius(8)
         })
         .padding(.horizontal)

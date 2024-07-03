@@ -1,5 +1,5 @@
 //
-//  ToDoAppApp.swift
+//  ToDoApp.swift
 //  ToDoApp
 //
 //  Created by Владимир on 21.06.2024.
@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct ToDoAppApp: App {
+struct ToDoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainScreen()
         }
     }
 }

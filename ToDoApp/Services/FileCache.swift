@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FileCache {
+final class FileCache {
     enum FileType {
         case json
         case csv
@@ -25,8 +25,19 @@ class FileCache {
         }
     }
     
-    func removeItem(_ itemId: String) {
-        items.removeAll(where: { $0.id == itemId })
+    @discardableResult
+    func removeItem(_ itemId: String) -> TodoItem? {
+        let index = items.firstIndex(where: { $0.id == itemId })
+        if let index = index {
+            return items.remove(at: index)
+        }
+        return nil
+    }
+    
+    func updateItem(_ newItem: TodoItem) {
+        if let index = items.firstIndex(where: { $0.id == newItem.id }) {
+            items[index] = newItem
+        }
     }
     
     func saveItemsToFile(_ fileName: String, fileType: FileType = .json) {
@@ -59,7 +70,7 @@ extension FileCache {
             }
             let fileURL = directoryPath.appendingPathComponent("\(fileName).json", conformingTo: .json)
             try data.write(to: fileURL)
-            print("File saved! Directory: \(fileURL)")
+//            print("File saved! Directory: \(fileURL)")
         } catch {
             print("Error: \(error.localizedDescription)")
             return
@@ -83,7 +94,7 @@ extension FileCache {
                     addItem(item)
                 }
             }
-            print("Items successfully loaded: \(items)")
+//            print("Items successfully loaded: \(items)")
         } catch {
             print("Error: \(error.localizedDescription)")
             return
@@ -93,9 +104,8 @@ extension FileCache {
 
 extension FileCache {
     private func saveItemsToCSVFile(_ fileName: String) {
-        let csvHeader = "id,text,isDone,importance,creationDate,deadline,editedDate\n"
         let csvObjects = items.map { $0.csv }.joined(separator: "\n")
-        let csvString = csvHeader + csvObjects
+        let csvString = TodoItem.csvHeader + csvObjects
         guard let directoryPath = cacheDirectory else {
             print("Caches directory does not exist")
             return
