@@ -13,7 +13,7 @@ import SwiftUI
 }
 
 struct ItemView: View {
-    @Binding var item: TodoItem
+    var item: TodoItem
     @State var isDone: Bool = false
     @State var importance: TodoItem.Importance = .common
     

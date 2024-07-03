@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 
 struct SubtitleView: View {
-    @Binding var items: [TodoItem]
+    var itemsCounter: Int
     @Binding var isComplitedHidden: Bool
     var body: some View {
         HStack {
-            Text("Выполнено — \(items.filter { $0.isDone }.count)")
+            Text("Выполнено — \(itemsCounter)")
                 .font(.subheadline)
                 .foregroundColor(Color.Label.Tertiary.color)
                 .scaledToFill()

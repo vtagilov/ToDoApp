@@ -13,7 +13,7 @@ import SwiftUI
 }
 
 struct MainScreen: View {
-    @State private var items: [TodoItem] = []
+    @StateObject private var viewModel = TodoItemsViewModel()
     @State private var selectedItem: TodoItem? = nil
     @State private var isShowingDetailScreen = false
     @State private var isComplitedHidden = false
@@ -33,67 +33,53 @@ struct MainScreen: View {
                 }
             }
             .navigationTitle("Мои дела")
-            .sheet(item: $selectedItem, content: { selectedItem in
-                if let index = items.firstIndex(where: { $0.id == selectedItem.id}) {
-                    DetailScreen(item: items[index]) { newItem in
-                        if let index = items.firstIndex(where: { $0.id == newItem.id }) {
-                            items[index] = newItem
-                        } else {
-                            items.append(newItem)
-                        }
-                    } deleteAction: { item in
-                        items.removeAll(where: { $0.id == item.id })
-                    }
-                }
-            })
-            .sheet(isPresented: $isShowingDetailScreen, content: {
-                DetailScreen { newItem in
-                    items.append(newItem)
-                } deleteAction: { item in
-                    items.removeAll(where: { $0.id == item.id })
-                }
-            })
+            .sheet(item: $selectedItem) { selectedItem in
+                DetailScreen(
+                    item: selectedItem,
+                    saveAction: { newItem in
+                        viewModel.addItem(newItem)
+                    }, deleteAction: { item in
+                        viewModel.removeItem(item)
+                    })
+            }
+            .sheet(isPresented: $isShowingDetailScreen) {
+                DetailScreen(
+                    saveAction: { newItem in
+                        viewModel.addItem(newItem)
+                    }, deleteAction: { item in
+                        viewModel.removeItem(item)
+                    })
+            }
         }
     }
     
     var list: some View {
         List {
             Section {
-                let presentedItems = items.filter({ isComplitedHidden && !$0.isDone || !isComplitedHidden })
-                ForEach(presentedItems.indices, id: \.self) { index in
+                let presentedItems = $isComplitedHidden.wrappedValue ? viewModel.uncompletedItems : viewModel.items
+                ForEach(presentedItems) { item in
                     ItemView(
-                        item: $items[index]) {
-                            selectedItem = items[index]
-                        } checkMarkAction: { isDone in
-                            updateItem(index: index, isDone: isDone)
-                        }
-                        .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                            Button {
-                                updateItem(index: index, isDone: true)
-                            } label: {
-                                Image(systemName: "checkmark.circle.fill")
+                        item: item,
+                        itemAction: {
+                            selectedItem = item
+                        },
+                        checkMarkAction: { isDone in
+                            viewModel.updateItem(item, isDone)
+                        })
+                    .modifier(
+                        SwipeModifier(
+                            markItemAsDone: {
+                                viewModel.updateItem(item, true)
+                            },
+                            removeItem: {
+                                viewModel.removeItem(item)
+                            },
+                            selectItem: {
+                                selectedItem = item
                             }
-                            .tint(Color.Palette.Green.color)
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button {
-                                items.remove(at: index)
-                            } label: {
-                                Image(systemName: "trash")
-                            }
-                            .tint(Color.Palette.Red.color)
-                        }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            Button {
-                                selectedItem = items[index]
-                            } label: {
-                                Image(systemName: "info.circle.fill")
-                            }
-                        }
-                        .tint(Color.Palette.GrayLight.color)
-                        
+                        )
+                    )
                 }
-                
                 HStack {
                     Color.clear
                         .contentShape(Rectangle())
@@ -108,7 +94,10 @@ struct MainScreen: View {
                     isShowingDetailScreen = true
                 }
             } header: {
-                SubtitleView(items: $items, isComplitedHidden: $isComplitedHidden)
+                SubtitleView(
+                    itemsCounter: isComplitedHidden ? viewModel.uncompletedItems.count : viewModel.items.count,
+                    isComplitedHidden: $isComplitedHidden
+                )
             }
         }
         .headerProminence(.increased)
@@ -116,20 +105,38 @@ struct MainScreen: View {
         .scrollContentBackground(.hidden)
         .background(Color.Back.Primary.color)
     }
+}
+
+private struct SwipeModifier: ViewModifier {
     
-    func updateItem(index: Int, isDone: Bool) {
-        let currentItem = items[index]
-        var newItems = items
-        let updatedItem = TodoItem(
-            id: currentItem.id,
-            text: currentItem.text,
-            importance: currentItem.importance,
-            isDone: isDone,
-            creationDate: currentItem.creationDate,
-            deadline: currentItem.deadline,
-            editedDate: currentItem.editedDate
-        )
-        newItems[index] = updatedItem
-        items = newItems
+    let markItemAsDone: () -> Void
+    let removeItem: () -> Void
+    let selectItem: () -> Void
+    
+    func body(content: Content) -> some View {
+        content
+            .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                Button {
+                    markItemAsDone()
+                } label: {
+                    Image(systemName: "checkmark.circle.fill")
+                }
+                .tint(Color.Palette.Green.color)
+            }
+            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                Button {
+                    removeItem()
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .tint(Color.Palette.Red.color)
+            }
+            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                Button {
+                    selectItem()
+                } label: {
+                    Image(systemName: "info.circle.fill")
+                }
+            }
     }
 }
