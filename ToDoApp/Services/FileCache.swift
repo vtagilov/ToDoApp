@@ -50,6 +50,7 @@ final class FileCache {
     }
     
     func loadItemsFromFile(_ fileName: String, fileType: FileType = .json) {
+        items = []
         switch fileType {
         case .json:
             loadItemsFromJSONFile(fileName)

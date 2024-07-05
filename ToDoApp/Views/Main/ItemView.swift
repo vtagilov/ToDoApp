@@ -22,8 +22,10 @@ struct ItemView: View {
     
     var body: some View {
         HStack {
-            CheckMarkView(isDone: $isDone, importance: $importance, action: {
-                checkMarkAction(!item.isDone)
+            CheckMarkView(isDone: $isDone,
+                          importance: $importance,
+                          action: {
+                checkMarkAction(isDone)
             })
             .padding(.trailing)
             
@@ -103,8 +105,8 @@ struct CheckMarkView: View {
     var body: some View {
         statusImage(status: status)
             .onTapGesture {
-                action()
                 isDone.toggle()
+                action()
             }
     }
     
