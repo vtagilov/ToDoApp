@@ -17,6 +17,7 @@ struct DetailScreen: View {
     
     @State private var text = ""
     @State private var importance: TodoItem.Importance = .common
+    @State private var category: TodoItem.Category = .other
     @State private var editedDate: Date?
     @State private var deadline: Date?
     @State private var isSaveButtonAvailable = false
@@ -29,6 +30,7 @@ struct DetailScreen: View {
                     OptionsView(importance: $importance,
                                 isSaveButtonAvailable: $isSaveButtonAvailable,
                                 deadline: $deadline,
+                                category: $category,
                                 deleteAction: {
                         if let item = item {
                             deleteAction(item)
@@ -51,6 +53,7 @@ struct DetailScreen: View {
                                             text: text,
                                             importance: importance,
                                             isDone: item.isDone,
+                                            category: category,
                                             creationDate: item.creationDate,
                                             deadline: deadline,
                                             editedDate: Date()
@@ -62,6 +65,7 @@ struct DetailScreen: View {
                                             text: text,
                                             importance: importance,
                                             isDone: item?.isDone ?? false,
+                                            category: category,
                                             creationDate: item?.creationDate ?? Date(),
                                             deadline: deadline
                                            )
@@ -76,6 +80,7 @@ struct DetailScreen: View {
                     self.text = item.text
                     self.importance = item.importance
                     self.deadline = item.deadline
+                    self.category = item.category
                 }
             }
         }

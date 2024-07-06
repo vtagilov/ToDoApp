@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class TodoItemsViewModel: ObservableObject {
     @Published private(set) var items: [TodoItem] {
@@ -54,12 +55,18 @@ final class TodoItemsViewModel: ObservableObject {
                 deadline: oldItem.deadline,
                 editedDate: oldItem.editedDate
             )
-            
             items.insert(newItem, at: index)
-            cache.removeItem(item.id)
-            cache.addItem(item)
+            cache.updateItem(newItem)
             cache.saveItemsToFile(defaultFileName)
         }
+    }
+    
+    func reloadItemsFromCache() {
+        cache.loadItemsFromFile(defaultFileName)
+        withAnimation {
+            items = cache.items
+        }
+        
     }
     
     private func updateItem(_ newItem: TodoItem) {

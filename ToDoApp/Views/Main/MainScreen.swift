@@ -16,6 +16,7 @@ struct MainScreen: View {
     @StateObject private var viewModel = TodoItemsViewModel()
     @State private var selectedItem: TodoItem? = nil
     @State private var isShowingDetailScreen = false
+    @State private var isShowingCalendarScreen = false
     @State private var isComplitedHidden = false
     
     var body: some View {
@@ -33,6 +34,17 @@ struct MainScreen: View {
                 }
             }
             .navigationTitle("Мои дела")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        isShowingCalendarScreen.toggle()
+                    }) {
+                        Image(systemName: "calendar")
+                            .font(.title2)
+                            .foregroundColor(.blue)
+                    }
+                }
+            }
             .sheet(item: $selectedItem) { selectedItem in
                 DetailScreen(
                     item: selectedItem,
@@ -50,6 +62,16 @@ struct MainScreen: View {
                         viewModel.removeItem(item)
                     })
             }
+            .fullScreenCover(
+                isPresented: $isShowingCalendarScreen,
+                onDismiss: {
+                    viewModel.reloadItemsFromCache()
+                },
+                content: {
+                    CalendarViewControllerWrapper()
+                        .ignoresSafeArea()
+                })
+            
         }
     }
     

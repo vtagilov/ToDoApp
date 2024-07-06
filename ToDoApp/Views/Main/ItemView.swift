@@ -22,8 +22,10 @@ struct ItemView: View {
     
     var body: some View {
         HStack {
-            CheckMarkView(isDone: $isDone, importance: $importance, action: {
-                checkMarkAction(!item.isDone)
+            CheckMarkView(isDone: $isDone,
+                          importance: $importance,
+                          action: {
+                checkMarkAction(isDone)
             })
             .padding(.trailing)
             
@@ -51,7 +53,10 @@ struct ItemView: View {
                     }
                 }
             }
-            Spacer(minLength: 0)
+            Spacer(minLength: 5)
+            Circle()
+                .foregroundStyle(item.category.color)
+                .frame(maxWidth: 20, maxHeight: 20)
             Image(systemName: "chevron.right")
                 .foregroundColor(Color.Palette.Gray.color)
         }
@@ -103,8 +108,8 @@ struct CheckMarkView: View {
     var body: some View {
         statusImage(status: status)
             .onTapGesture {
-                action()
                 isDone.toggle()
+                action()
             }
     }
     

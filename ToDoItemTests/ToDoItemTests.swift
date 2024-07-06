@@ -32,6 +32,7 @@ final class ToDoItemTests: XCTestCase {
             text: "second Task",
             importance: .common,
             isDone: true,
+            category: .work,
             creationDate: date
         )
         itemWithComma = TodoItem(
@@ -155,20 +156,20 @@ final class ToDoItemTests: XCTestCase {
     
     func testCSVSerialization() {
         let csv1 = item1.csv
-        XCTAssertEqual(csv1, "17451,This is my first Task!,false,important,\(date.timeIntervalSince1970),\(date.addingTimeInterval(10000).timeIntervalSince1970),\(date.timeIntervalSince1970)")
+        XCTAssertEqual(csv1, "17451,This is my first Task!,false,other,important,\(date.timeIntervalSince1970),\(date.addingTimeInterval(10000).timeIntervalSince1970),\(date.timeIntervalSince1970)")
         
         let csv2 = item2.csv
-        XCTAssertEqual(csv2, "\(item2.id),second Task,true,common,\(date.timeIntervalSince1970), , ")
+        XCTAssertEqual(csv2, "\(item2.id),second Task,true,work,common,\(date.timeIntervalSince1970), , ")
         
         let csv3 = itemWithComma.csv
-        XCTAssertEqual(csv3, "\(itemWithComma.id),\"item, with comma\",true,common,\(date.timeIntervalSince1970), , ")
+        XCTAssertEqual(csv3, "\(itemWithComma.id),\"item, with comma\",true,other,common,\(date.timeIntervalSince1970), , ")
         
         let csv4 = itemWithQuotes.csv
-        XCTAssertEqual(csv4, "\(itemWithQuotes.id),\"item, \"\"with\"\" comma\",true,common,\(date.timeIntervalSince1970), , ")
+        XCTAssertEqual(csv4, "\(itemWithQuotes.id),\"item, \"\"with\"\" comma\",true,other,common,\(date.timeIntervalSince1970), , ")
     }
     
     func testCSVDeserialization() {
-        let csv1 = "17451,This is my first Task!,false,important,\(date.timeIntervalSince1970),\(date.addingTimeInterval(10000).timeIntervalSince1970),\(date.timeIntervalSince1970)"
+        let csv1 = "17451,This is my first Task!,false,study,important,\(date.timeIntervalSince1970),\(date.addingTimeInterval(10000).timeIntervalSince1970),\(date.timeIntervalSince1970)"
         guard let item1 = TodoItem.parse(csv: csv1) else {
             XCTFail("Failed to parse CSV1")
             return
@@ -181,7 +182,7 @@ final class ToDoItemTests: XCTestCase {
         XCTAssertEqual(item1.deadline?.timeIntervalSince1970, date.addingTimeInterval(10000).timeIntervalSince1970)
         XCTAssertEqual(item1.editedDate?.timeIntervalSince1970, date.timeIntervalSince1970)
         
-        let csv2 = "\(item2.id),second Task,true,common,\(date.timeIntervalSince1970), , "
+        let csv2 = "\(item2.id),second Task,true,other,common,\(date.timeIntervalSince1970), , "
         guard let item2 = TodoItem.parse(csv: csv2) else {
             XCTFail("Failed to parse CSV2")
             return
@@ -194,7 +195,7 @@ final class ToDoItemTests: XCTestCase {
         XCTAssertNil(item2.deadline)
         XCTAssertNil(item2.editedDate)
         
-        let csv3 = "\(item2.id),\"item, with comma\",true,common,\(date.timeIntervalSince1970), , "
+        let csv3 = "\(item2.id),\"item, with comma\",true,work,common,\(date.timeIntervalSince1970), , "
         guard let itemWithComma = TodoItem.parse(csv: csv3) else {
             XCTFail("Failed to parse CSV3")
             return
@@ -207,7 +208,7 @@ final class ToDoItemTests: XCTestCase {
         XCTAssertNil(itemWithComma.deadline)
         XCTAssertNil(itemWithComma.editedDate)
         
-        let csv4 = "\(item2.id),\"item, \"\"with\"\" comma\",true,common,\(date.timeIntervalSince1970), , "
+        let csv4 = "\(item2.id),\"item, \"\"with\"\" comma\",true,hobby,common,\(date.timeIntervalSince1970), , "
         guard let itemWithQuotes = TodoItem.parse(csv: csv4) else {
             XCTFail("Failed to parse CSV4")
             return

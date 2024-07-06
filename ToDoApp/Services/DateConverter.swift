@@ -22,3 +22,11 @@ extension DateFormatter {
         return formatter.string(from: date)
     }
 }
+
+extension Date {
+    static func startOfNextDay() -> Date {
+        let date = Date().addingTimeInterval(86400)
+        let calendar = Calendar.current
+        return calendar.startOfDay(for: date)
+    }
+}
