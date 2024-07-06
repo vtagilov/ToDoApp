@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct TodoItem: Identifiable {
     enum Importance: String {
@@ -13,11 +14,34 @@ struct TodoItem: Identifiable {
         case common
         case important
     }
+    enum Category: String, Identifiable {
+        case work
+        case study
+        case hobby
+        case other
+        
+        var id: String {
+            self.rawValue
+        }
+        var color: Color {
+            switch self {
+            case .work:
+                return Color.Palette.Red.color
+            case .study:
+                return Color.Palette.Blue.color
+            case .hobby:
+                return Color.Palette.Green.color
+            case .other:
+                return .clear
+            }
+        }
+    }
     
     let id: String
     let text: String
     let importance: Importance
     let isDone: Bool
+    let category: Category
     let creationDate: Date
     let deadline: Date?
     let editedDate: Date?
@@ -27,6 +51,7 @@ struct TodoItem: Identifiable {
         text: String,
         importance: Importance = .common,
         isDone: Bool = false,
+        category: Category = .other,
         creationDate: Date = Date(),
         deadline: Date? = nil,
         editedDate: Date? = nil
@@ -35,8 +60,11 @@ struct TodoItem: Identifiable {
         self.text = text
         self.importance = importance
         self.isDone = isDone
+        self.category = category
         self.creationDate = creationDate
         self.deadline = deadline
         self.editedDate = editedDate
     }
 }
+
+

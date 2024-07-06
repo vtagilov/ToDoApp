@@ -9,7 +9,7 @@ import Foundation
 
 extension TodoItem {
     enum CodingKeys: String {
-        case id, text, isDone, importance, creationDate, deadline, editedDate
+        case id, text, isDone, category, importance, creationDate, deadline, editedDate
     }
     
     var json: Any? {
@@ -41,6 +41,11 @@ extension TodoItem {
         let importanceString = dict[CodingKeys.importance.rawValue] as? String
         let importance = Importance(rawValue: importanceString ?? Importance.common.rawValue) ?? .common
         
+        var category: Category = .other
+        if let categoryString = dict[CodingKeys.category.rawValue] as? String {
+            category = Category(rawValue: categoryString) ?? .other
+        }
+        
         var deadline: Date? = nil
         if let deadlineTimeInterval = dict[CodingKeys.deadline.rawValue] as? TimeInterval {
             deadline = Date(timeIntervalSince1970: deadlineTimeInterval)
@@ -51,7 +56,7 @@ extension TodoItem {
             editedDate = Date(timeIntervalSince1970: editedTimeInterval)
         }
         
-        return TodoItem(id: id, text: text, importance: importance, isDone: isDone, creationDate: creationDate, deadline: deadline, editedDate: editedDate)
+        return TodoItem(id: id, text: text, importance: importance, isDone: isDone, category: category ,creationDate: creationDate, deadline: deadline, editedDate: editedDate)
     }
     
     private func configureDict() -> [String: Any] {
@@ -59,6 +64,9 @@ extension TodoItem {
         dict[CodingKeys.id.rawValue] = id
         dict[CodingKeys.text.rawValue] = text
         dict[CodingKeys.isDone.rawValue] = isDone
+        if category != .other {
+            dict[CodingKeys.category.rawValue] = category.rawValue
+        }
         if importance != .common {
             dict[CodingKeys.importance.rawValue] = importance.rawValue
         }
