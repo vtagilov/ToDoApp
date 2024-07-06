@@ -75,7 +75,7 @@ struct OptionsView: View {
                 Toggle("", isOn: $isDeadlineDefined)
                     .onChange(of: isDeadlineDefined) {
                         if deadline == nil {
-                            deadline = Date().addingTimeInterval(86400)
+                            deadline = Date.startOfNextDay()
                         }
                         if !isDeadlineDefined {
                             deadline = nil
