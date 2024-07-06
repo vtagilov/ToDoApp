@@ -53,7 +53,10 @@ struct ItemView: View {
                     }
                 }
             }
-            Spacer(minLength: 0)
+            Spacer(minLength: 5)
+            Circle()
+                .foregroundStyle(item.category.color)
+                .frame(maxWidth: 20, maxHeight: 20)
             Image(systemName: "chevron.right")
                 .foregroundColor(Color.Palette.Gray.color)
         }

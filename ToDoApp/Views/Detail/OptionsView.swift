@@ -12,6 +12,7 @@ struct OptionsView: View {
     @Binding var importance: TodoItem.Importance
     @Binding var isSaveButtonAvailable: Bool
     @Binding var deadline: Date?
+    @Binding var category: TodoItem.Category
     @State var isCalendarHidden = true
     @State var isDeadlineDefined: Bool = false
     
@@ -22,6 +23,8 @@ struct OptionsView: View {
             importanceView
             Divider()
             deadlineView
+            Divider()
+            categoryPicker
         }
         .primaryBackground()
         .onAppear(perform: {
@@ -119,5 +122,29 @@ struct OptionsView: View {
                 .cornerRadius(8)
         })
         .padding(.horizontal)
+    }
+        
+    var categoryPicker: some View {
+        HStack {
+            Text("Категория")
+            Spacer()
+            Picker(
+                "",
+                selection: $category) {
+                    ForEach([TodoItem.Category.work, TodoItem.Category.study, TodoItem.Category.hobby, TodoItem.Category.other]) { category in
+                        HStack {
+                            Text(category.rawValue.capitalized)
+                                .foregroundColor(category.color != .clear ? category.color : Color.Label.Primary.color)
+                            Circle()
+                                .foregroundStyle(category.color)
+                                .frame(width: 10, height: 10)
+                        }
+                        .tag(category)
+                    }
+                }
+                .pickerStyle(WheelPickerStyle())
+                .scaledToFit()
+        }
+        .frame(maxHeight: 100)
     }
 }

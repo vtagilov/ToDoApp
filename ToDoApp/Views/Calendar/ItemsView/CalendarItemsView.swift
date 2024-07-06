@@ -20,7 +20,7 @@ final class CalendarItemsView: UITableView {
         self.viewModel = viewModel
         self.datesView = datesView
         self.openDetailScreen = openDetailScreen
-        super.init(frame: .zero, style: .grouped)
+        super.init(frame: .zero, style: .insetGrouped)
         configureTableView()
         self.dataSource = self
         self.delegate = self

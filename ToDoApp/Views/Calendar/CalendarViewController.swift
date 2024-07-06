@@ -29,7 +29,6 @@ final class CalendarViewController: UIViewController {
     private let plusButton: UIButton = {
         let plusImage = UIImage(systemName: "plus.circle.fill")?.withTintColor(UIColor(Color.Palette.White.color))
         let button = UIButton()
-        button.backgroundColor = UIColor(Color.Palette.White.color)
         button.setImage(plusImage, for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.contentHorizontalAlignment = .fill
