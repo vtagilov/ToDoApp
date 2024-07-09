@@ -19,7 +19,6 @@ struct CalendarViewControllerWrapper: UIViewControllerRepresentable {
     }
 }
 
-
 final class CalendarViewController: UIViewController {
     private let viewModel = CalendarItemsViewModel()
     

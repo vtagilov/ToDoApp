@@ -20,12 +20,12 @@ struct SubtitleView: View {
                 .textCase(.none)
             Button(action: {
                 isComplitedHidden.toggle()
-            }) {
+            }, label: {
                 Text(isComplitedHidden ? "Показать" : "Скрыть")
                     .font(.subheadline)
                     .fontWeight(.bold)
                     .textCase(.none)
-            }
+            })
             .frame(maxWidth: .infinity, alignment: .trailing)
             .foregroundColor(Color.Palette.Blue.color)
         }

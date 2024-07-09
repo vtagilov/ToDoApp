@@ -53,8 +53,6 @@ final class CalendarItemsViewModel {
         }
     }
     
-    
-    
     func removeItem(_ item: TodoItem) {
         if let index = items.firstIndex(where: { $0.id == item.id }) {
             items.remove(at: index)

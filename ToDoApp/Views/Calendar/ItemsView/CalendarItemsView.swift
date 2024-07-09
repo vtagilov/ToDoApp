@@ -29,7 +29,12 @@ final class CalendarItemsView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func scrollToRow(at indexPath: IndexPath, at scrollPosition: UITableView.ScrollPosition, animated: Bool, completion: @escaping () -> Void) {
+    func scrollToRow(
+        at indexPath: IndexPath,
+        at scrollPosition: UITableView.ScrollPosition,
+        animated: Bool,
+        completion: @escaping () -> Void
+    ) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
         self.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
@@ -113,8 +118,11 @@ extension CalendarItemsView: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let doneAction = UIContextualAction(style: .normal, title: "") { [weak self] (_,_,completionHandler) in
+    func tableView(
+        _ tableView: UITableView,
+        leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let doneAction = UIContextualAction(style: .normal, title: "") { [weak self] (_, _, completionHandler) in
             guard let self = self else { return }
             if let cell = tableView.cellForRow(at: indexPath) as? TodoItemCell {
                 if let item = self.viewModel?.getItemById(itemId: cell.itemId) {
@@ -134,8 +142,11 @@ extension CalendarItemsView: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [doneAction])
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let notDoneAction = UIContextualAction(style: .normal, title: "") { [weak self] (_,_,completionHandler) in
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let notDoneAction = UIContextualAction(style: .normal, title: "") { [weak self] (_, _, completionHandler) in
             guard let self = self else { return }
             if let cell = tableView.cellForRow(at: indexPath) as? TodoItemCell {
                 if let item = self.viewModel?.getItemById(itemId: cell.itemId) {

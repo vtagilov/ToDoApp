@@ -14,7 +14,7 @@ import SwiftUI
 
 struct MainScreen: View {
     @StateObject private var viewModel = TodoItemsViewModel()
-    @State private var selectedItem: TodoItem? = nil
+    @State private var selectedItem: TodoItem?
     @State private var isShowingDetailScreen = false
     @State private var isShowingCalendarScreen = false
     @State private var isComplitedHidden = false
@@ -38,11 +38,11 @@ struct MainScreen: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         isShowingCalendarScreen.toggle()
-                    }) {
+                    }, label: {
                         Image(systemName: "calendar")
                             .font(.title2)
                             .foregroundColor(.blue)
-                    }
+                    })
                 }
             }
             .sheet(item: $selectedItem) { selectedItem in

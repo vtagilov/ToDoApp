@@ -66,5 +66,3 @@ struct TodoItem: Identifiable {
         self.editedDate = editedDate
     }
 }
-
-

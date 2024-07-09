@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 final class TodoItemCell: UITableViewCell {
     static let reuseIdentifier = "TodoItemCell"
     var itemId = ""
@@ -27,7 +26,11 @@ final class TodoItemCell: UITableViewCell {
         
         if item.isDone {
             let text = NSMutableAttributedString(string: item.text)
-            text.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: text.length))
+            text.addAttribute(
+                .strikethroughStyle,
+                value: NSUnderlineStyle.single.rawValue,
+                range: NSRange(location: 0, length: text.length)
+            )
             label.attributedText = text
         } else {
             let text = NSMutableAttributedString(string: item.text)
