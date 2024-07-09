@@ -66,28 +66,27 @@ extension FileCache {
         do {
             let data = try JSONSerialization.data(withJSONObject: jsonObjects)
             guard let directoryPath = cacheDirectory else {
-                print("Caches directory does not exist")
+                LoggerSetup.shared.logError("saveItemsToJSONFile: Caches directory does not exist")
                 return
             }
             let fileURL = directoryPath.appendingPathComponent("\(fileName).json", conformingTo: .json)
             try data.write(to: fileURL)
-//            print("File saved! Directory: \(fileURL)")
         } catch {
-            print("Error: \(error.localizedDescription)")
+            LoggerSetup.shared.logError("saveItemsToJSONFile: \(error.localizedDescription)")
             return
         }
     }
     
     private func loadItemsFromJSONFile(_ fileName: String) {        
         guard let directoryPath = cacheDirectory else {
-            print("Caches directory does not exist")
+            LoggerSetup.shared.logError("loadItemsFromJSONFile: Caches directory does not exist")
             return
         }
         let fileURL = directoryPath.appendingPathComponent("\(fileName).json", conformingTo: .json)
         do {
             let data = try Data(contentsOf: fileURL)
             guard let json = try JSONSerialization.jsonObject(with: data) as? [Any] else {
-                print("File is empty. Path: \(fileURL)")
+                LoggerSetup.shared.logError("loadItemsFromJSONFile: File is empty. Path: \(fileURL)")
                 return
             }
             for jsonObject in json {
@@ -95,9 +94,8 @@ extension FileCache {
                     addItem(item)
                 }
             }
-//            print("Items successfully loaded: \(items)")
         } catch {
-            print("Error: \(error.localizedDescription)")
+            LoggerSetup.shared.logError("loadItemsFromJSONFile: \(error.localizedDescription)")
             return
         }
     }
@@ -108,23 +106,22 @@ extension FileCache {
         let csvObjects = items.map { $0.csv }.joined(separator: "\n")
         let csvString = TodoItem.csvHeader + csvObjects
         guard let directoryPath = cacheDirectory else {
-            print("Caches directory does not exist")
+            LoggerSetup.shared.logError("saveItemsToCSVFile: Caches directory does not exist")
             return
         }
         let fileURL = directoryPath.appendingPathComponent("\(fileName).csv")
 
         do {
             try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
-            print("File saved! Directory: \(fileURL)")
         } catch {
-            print("Error: \(error.localizedDescription)")
+            LoggerSetup.shared.logError("saveItemsToCSVFile: \(error.localizedDescription)")
             return
         }
     }
     
     private func loadItemsFromCSVFile(_ fileName: String) {
         guard let directoryPath = cacheDirectory else {
-            print("Caches directory does not exist")
+            LoggerSetup.shared.logError("loadItemsFromCSVFile: Caches directory does not exist")
             return
         }
         let fileURL = directoryPath.appendingPathComponent("\(fileName).csv")
@@ -136,9 +133,8 @@ extension FileCache {
                     addItem(item)
                 }
             }
-            print("Items successfully loaded: \(items)")
         } catch {
-            print("Error: \(error.localizedDescription)")
+            LoggerSetup.shared.logError("loadItemsFromCSVFile: \(error.localizedDescription)")
             return
         }
     }
