@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		76B8F57EE3458C15BB8E19F9 /* libPods-ToDoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD45AE69ACF0FCB6D0DC066 /* libPods-ToDoApp.a */; };
+		E75EB5A42C405ACA00723E80 /* FileCache in Frameworks */ = {isa = PBXBuildFile; productRef = E75EB5A32C405ACA00723E80 /* FileCache */; };
 		E7745B532C25692400E584D3 /* ToDoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B522C25692400E584D3 /* ToDoApp.swift */; };
 		E7745B572C25692600E584D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7745B562C25692600E584D3 /* Assets.xcassets */; };
 		E7745B5A2C25692600E584D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7745B592C25692600E584D3 /* Preview Assets.xcassets */; };
 		E7745B612C258BEA00E584D3 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B602C258BEA00E584D3 /* TodoItem.swift */; };
-		E7745B632C258DE400E584D3 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B622C258DE400E584D3 /* FileCache.swift */; };
 		E7745B6D2C25CAA600E584D3 /* ToDoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B6C2C25CAA600E584D3 /* ToDoItemTests.swift */; };
 		E7745B762C26F16400E584D3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B752C26F16400E584D3 /* Colors.swift */; };
 		E7745B7E2C29BD8700E584D3 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B7D2C29BD8700E584D3 /* MainScreen.swift */; };
@@ -56,7 +56,6 @@
 		E7745B562C25692600E584D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E7745B592C25692600E584D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E7745B602C258BEA00E584D3 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
-		E7745B622C258DE400E584D3 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		E7745B6A2C25CAA600E584D3 /* ToDoItemTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoItemTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7745B6C2C25CAA600E584D3 /* ToDoItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemTests.swift; sourceTree = "<group>"; };
 		E7745B752C26F16400E584D3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -86,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E75EB5A42C405ACA00723E80 /* FileCache in Frameworks */,
 				E77557082C3C23BB003B80FA /* CocoaLumberjackSwift in Frameworks */,
 				E775570A2C3C23BB003B80FA /* CocoaLumberjackSwiftLogBackend in Frameworks */,
 				E77557062C3C23BB003B80FA /* CocoaLumberjack in Frameworks */,
@@ -276,7 +276,6 @@
 		E77998E32C2F644900065344 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E7745B622C258DE400E584D3 /* FileCache.swift */,
 				E77998E42C2F648800065344 /* DateConverter.swift */,
 				E775570B2C3C3D99003B80FA /* LoggerSetup.swift */,
 			);
@@ -313,6 +312,7 @@
 				E77557052C3C23BB003B80FA /* CocoaLumberjack */,
 				E77557072C3C23BB003B80FA /* CocoaLumberjackSwift */,
 				E77557092C3C23BB003B80FA /* CocoaLumberjackSwiftLogBackend */,
+				E75EB5A32C405ACA00723E80 /* FileCache */,
 			);
 			productName = ToDoApp;
 			productReference = E7745B4F2C25692400E584D3 /* ToDoApp.app */;
@@ -366,6 +366,7 @@
 			mainGroup = E7745B462C25692400E584D3;
 			packageReferences = (
 				E77557042C3C23BB003B80FA /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+				E75EB5A22C405ACA00723E80 /* XCRemoteSwiftPackageReference "FileCache" */,
 			);
 			productRefGroup = E7745B502C25692400E584D3 /* Products */;
 			projectDirPath = "";
@@ -461,7 +462,6 @@
 				E77557012C3898C3003B80FA /* CalendarDatesView.swift in Sources */,
 				E77556BC2C330363003B80FA /* TodoItem+CSV.swift in Sources */,
 				E7745B532C25692400E584D3 /* ToDoApp.swift in Sources */,
-				E7745B632C258DE400E584D3 /* FileCache.swift in Sources */,
 				E77998E52C2F648800065344 /* DateConverter.swift in Sources */,
 				E77556BE2C3303B7003B80FA /* TodoItem+JSON.swift in Sources */,
 				E7745B612C258BEA00E584D3 /* TodoItem.swift in Sources */,
@@ -751,6 +751,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E75EB5A22C405ACA00723E80 /* XCRemoteSwiftPackageReference "FileCache" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vtagilov/FileCache/";
+			requirement = {
+				kind = exactVersion;
+				version = 2.0.0;
+			};
+		};
 		E77557042C3C23BB003B80FA /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
@@ -762,6 +770,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E75EB5A32C405ACA00723E80 /* FileCache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E75EB5A22C405ACA00723E80 /* XCRemoteSwiftPackageReference "FileCache" */;
+			productName = FileCache;
+		};
 		E77557052C3C23BB003B80FA /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E77557042C3C23BB003B80FA /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;

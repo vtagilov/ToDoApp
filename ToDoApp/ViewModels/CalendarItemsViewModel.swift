@@ -6,18 +6,23 @@
 //
 
 import Foundation
+import FileCache
 
 final class CalendarItemsViewModel {
     var selectedItem: TodoItem?
     private(set) var items: [TodoItem]
     private(set) var itemsDict = [String: [TodoItem]]() // deadline: [item]
     
-    private let cache = FileCache()
+    private let cache: FileCache<TodoItem>
     private let defaultFileName = "TodoItemList"
     
     private(set) lazy var uniqueDeadlines = [String]()
     
     init() {
+        let cacheErrorHandler: (CacheError) -> Void = { error in
+            LoggerSetup.shared.logError("CacheError: \(error.errorDescription)")
+        }
+        cache = FileCache<TodoItem>(errorHandler: cacheErrorHandler)
         cache.loadItemsFromFile(defaultFileName)
         items = cache.items
         reloadDict()

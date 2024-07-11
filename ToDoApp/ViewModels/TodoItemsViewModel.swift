@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import FileCache
 
 final class TodoItemsViewModel: ObservableObject {
     @Published private(set) var items: [TodoItem] {
@@ -16,10 +17,14 @@ final class TodoItemsViewModel: ObservableObject {
     }
     @Published private(set) var uncompletedItems = [TodoItem]()
     
-    private let cache = FileCache()
+    private let cache: FileCache<TodoItem>
     private let defaultFileName = "TodoItemList"
     
     init() {
+        let cacheErrorHandler: (CacheError) -> Void = { error in
+            LoggerSetup.shared.logError("CacheError: \(error.errorDescription)")
+        }
+        cache = FileCache<TodoItem>(errorHandler: cacheErrorHandler)
         cache.loadItemsFromFile(defaultFileName)
         items = cache.items
         uncompletedItems = items.filter({ !$0.isDone })

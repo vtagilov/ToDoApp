@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "filecache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vtagilov/FileCache/",
+      "state" : {
+        "revision" : "af488d9ab4ce5af3b4c38a5aeae510d31bec9d0a",
+        "version" : "2.0.0"
+      }
+    },
+    {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log",
