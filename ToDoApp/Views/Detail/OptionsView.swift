@@ -131,7 +131,14 @@ struct OptionsView: View {
             Picker(
                 "",
                 selection: $category) {
-                    ForEach([TodoItem.Category.work, TodoItem.Category.study, TodoItem.Category.hobby, TodoItem.Category.other]) { category in
+                    ForEach(
+                        [
+                            TodoItem.Category.work,
+                            TodoItem.Category.study,
+                            TodoItem.Category.hobby,
+                            TodoItem.Category.other
+                        ]
+                    ) { category in
                         HStack {
                             Text(category.rawValue.capitalized)
                                 .foregroundColor(category.color != .clear ? category.color : Color.Label.Primary.color)

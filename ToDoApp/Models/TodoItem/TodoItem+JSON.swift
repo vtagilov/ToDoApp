@@ -46,17 +46,26 @@ extension TodoItem {
             category = Category(rawValue: categoryString) ?? .other
         }
         
-        var deadline: Date? = nil
+        var deadline: Date?
         if let deadlineTimeInterval = dict[CodingKeys.deadline.rawValue] as? TimeInterval {
             deadline = Date(timeIntervalSince1970: deadlineTimeInterval)
         }
         
-        var editedDate: Date? = nil
+        var editedDate: Date?
         if let editedTimeInterval = dict[CodingKeys.editedDate.rawValue] as? TimeInterval {
             editedDate = Date(timeIntervalSince1970: editedTimeInterval)
         }
         
-        return TodoItem(id: id, text: text, importance: importance, isDone: isDone, category: category ,creationDate: creationDate, deadline: deadline, editedDate: editedDate)
+        return TodoItem(
+            id: id,
+            text: text,
+            importance: importance,
+            isDone: isDone,
+            category: category,
+            creationDate: creationDate,
+            deadline: deadline,
+            editedDate: editedDate
+        )
     }
     
     private func configureDict() -> [String: Any] {

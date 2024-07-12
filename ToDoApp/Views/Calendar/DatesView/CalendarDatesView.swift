@@ -49,7 +49,10 @@ extension CalendarDatesView: UICollectionViewDataSource {
         return viewModel?.uniqueDeadlines.count ?? 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DateCell.reuseIdentifier, for: indexPath)
         guard let cell = cell as? DateCell else {
             return UICollectionViewCell()
@@ -62,7 +65,6 @@ extension CalendarDatesView: UICollectionViewDataSource {
         return cell
     }
 }
-
 
 extension CalendarDatesView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

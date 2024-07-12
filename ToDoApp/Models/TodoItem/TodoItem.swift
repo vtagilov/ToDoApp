@@ -7,8 +7,9 @@
 
 import Foundation
 import SwiftUI
+import FileCache
 
-struct TodoItem: Identifiable {
+struct TodoItem: Identifiable, Cashable {
     enum Importance: String {
         case unimportant
         case common
@@ -66,5 +67,3 @@ struct TodoItem: Identifiable {
         self.editedDate = editedDate
     }
 }
-
-
