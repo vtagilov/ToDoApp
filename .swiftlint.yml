@@ -1,5 +1,7 @@
 included:
   - ToDoApp
+excluded:
+  - ToDoApp/Models/Network/
 identifier_name:
   min_length:
     warning: 0
@@ -7,3 +9,6 @@ identifier_name:
 disabled_rules:
   - trailing_whitespace
   - function_parameter_count
+  - colon
+  - comma
+  - control_statement

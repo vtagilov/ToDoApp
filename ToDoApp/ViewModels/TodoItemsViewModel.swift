@@ -17,6 +17,8 @@ final class TodoItemsViewModel: ObservableObject {
     }
     @Published private(set) var uncompletedItems = [TodoItem]()
     
+    private let networkService = NetworkService()
+    
     private let cache: FileCache<TodoItem>
     private let defaultFileName = "TodoItemList"
     
@@ -28,24 +30,29 @@ final class TodoItemsViewModel: ObservableObject {
         cache.loadItemsFromFile(defaultFileName)
         items = cache.items
         uncompletedItems = items.filter({ !$0.isDone })
+        networkService.viewModel = self
+        networkService.getItemsList { items, _ in
+            if let items = items {
+                self.items = items
+            }
+        }
     }
     
     func addItem(_ item: TodoItem) {
         if items.contains(where: { $0.id == item.id }) {
             updateItem(item)
-        } else {
-            items.append(item)
+            return
         }
-        cache.addItem(item)
-        cache.saveItemsToFile(defaultFileName)
+        items.append(item)
+        
+        networkService.addItem(item) {  _, _ in }
     }
     
     func removeItem(_ item: TodoItem) {
         if let index = items.firstIndex(where: { $0.id == item.id }) {
             items.remove(at: index)
         }
-        cache.removeItem(item.id)
-        cache.saveItemsToFile(defaultFileName)
+        networkService.removeItem(item) { _, _ in }
     }
     
     func updateItem(_ item: TodoItem, _ isDone: Bool) {
@@ -60,10 +67,10 @@ final class TodoItemsViewModel: ObservableObject {
                 deadline: oldItem.deadline,
                 editedDate: oldItem.editedDate
             )
-            items.insert(newItem, at: index)
-            cache.updateItem(newItem)
-            cache.saveItemsToFile(defaultFileName)
+            items[index] = newItem
+            networkService.updateItem(newItem) { _, _ in }
         }
+        
     }
     
     func reloadItemsFromCache() {
@@ -71,13 +78,12 @@ final class TodoItemsViewModel: ObservableObject {
         withAnimation {
             items = cache.items
         }
-        
     }
     
     private func updateItem(_ newItem: TodoItem) {
         if let index = items.firstIndex(where: { $0.id == newItem.id }) {
             items[index] = newItem
         }
-        cache.updateItem(newItem)
+        networkService.updateItem(newItem) { _, _ in }
     }
 }

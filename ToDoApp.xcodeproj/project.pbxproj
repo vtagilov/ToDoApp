@@ -37,6 +37,13 @@
 		E775570C2C3C3D99003B80FA /* LoggerSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E775570B2C3C3D99003B80FA /* LoggerSetup.swift */; };
 		E77998E52C2F648800065344 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77998E42C2F648800065344 /* DateConverter.swift */; };
 		E77998E72C2F9A8900065344 /* DetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77998E62C2F9A8900065344 /* DetailScreen.swift */; };
+		E7942FEE2C45179C0028D975 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7942FED2C45179C0028D975 /* NetworkService.swift */; };
+		E79D591D2C47EA6700B4CBBD /* ListNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D591C2C47EA6700B4CBBD /* ListNetworkModel.swift */; };
+		E79D59202C47EAD700B4CBBD /* ItemNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D591F2C47EAD700B4CBBD /* ItemNetworkModel.swift */; };
+		E79D59222C47EB5200B4CBBD /* NetworkErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D59212C47EB5200B4CBBD /* NetworkErrors.swift */; };
+		E79D59242C47EB6300B4CBBD /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D59232C47EB6300B4CBBD /* NetworkProtocol.swift */; };
+		E79D59262C4AF7E900B4CBBD /* Revisionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D59252C4AF7E900B4CBBD /* Revisionable.swift */; };
+		E79D59292C4B13F400B4CBBD /* RequestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79D59282C4B13F400B4CBBD /* RequestTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +86,13 @@
 		E775570B2C3C3D99003B80FA /* LoggerSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerSetup.swift; sourceTree = "<group>"; };
 		E77998E42C2F648800065344 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		E77998E62C2F9A8900065344 /* DetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScreen.swift; sourceTree = "<group>"; };
+		E7942FED2C45179C0028D975 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		E79D591C2C47EA6700B4CBBD /* ListNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNetworkModel.swift; sourceTree = "<group>"; };
+		E79D591F2C47EAD700B4CBBD /* ItemNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemNetworkModel.swift; sourceTree = "<group>"; };
+		E79D59212C47EB5200B4CBBD /* NetworkErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrors.swift; sourceTree = "<group>"; };
+		E79D59232C47EB6300B4CBBD /* NetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
+		E79D59252C4AF7E900B4CBBD /* Revisionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Revisionable.swift; sourceTree = "<group>"; };
+		E79D59282C4B13F400B4CBBD /* RequestTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTypes.swift; sourceTree = "<group>"; };
 		F9A4D84E33A7CAF4C35768D5 /* Pods-ToDoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,7 +131,9 @@
 		E75EB5A52C41C90100723E80 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				E79D59272C4B13D800B4CBBD /* NetworkService */,
 				E75EB5A62C41C97E00723E80 /* URLSession.swift */,
+				E79D59212C47EB5200B4CBBD /* NetworkErrors.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -178,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				E77556BA2C3302BD003B80FA /* TodoItem */,
+				E79D591B2C47EA5600B4CBBD /* Network */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -291,6 +308,26 @@
 				E77998E42C2F648800065344 /* DateConverter.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		E79D591B2C47EA5600B4CBBD /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				E79D591C2C47EA6700B4CBBD /* ListNetworkModel.swift */,
+				E79D591F2C47EAD700B4CBBD /* ItemNetworkModel.swift */,
+				E79D59252C4AF7E900B4CBBD /* Revisionable.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		E79D59272C4B13D800B4CBBD /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				E79D59232C47EB6300B4CBBD /* NetworkProtocol.swift */,
+				E7942FED2C45179C0028D975 /* NetworkService.swift */,
+				E79D59282C4B13F400B4CBBD /* RequestTypes.swift */,
+			);
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 		F7B1E3007757C2F90317EE25 /* Frameworks */ = {
@@ -460,8 +497,13 @@
 				E77556D72C361AB7003B80FA /* CalendarViewController.swift in Sources */,
 				E77556DD2C37FBDB003B80FA /* DateCell.swift in Sources */,
 				E75EB5A72C41C97E00723E80 /* URLSession.swift in Sources */,
+				E79D59292C4B13F400B4CBBD /* RequestTypes.swift in Sources */,
 				E7745BAA2C2EC9CC00E584D3 /* View.swift in Sources */,
+				E79D59262C4AF7E900B4CBBD /* Revisionable.swift in Sources */,
 				E77556D92C36DCF9003B80FA /* CalendarItemsViewModel.swift in Sources */,
+				E7942FEE2C45179C0028D975 /* NetworkService.swift in Sources */,
+				E79D591D2C47EA6700B4CBBD /* ListNetworkModel.swift in Sources */,
+				E79D59202C47EAD700B4CBBD /* ItemNetworkModel.swift in Sources */,
 				E7745B852C2ADC7900E584D3 /* NewItemButton.swift in Sources */,
 				E77556FF2C389398003B80FA /* CalendarItemsView.swift in Sources */,
 				E77556DB2C37FBB4003B80FA /* TodoItemCell.swift in Sources */,
@@ -475,7 +517,9 @@
 				E77556BC2C330363003B80FA /* TodoItem+CSV.swift in Sources */,
 				E7745B532C25692400E584D3 /* ToDoApp.swift in Sources */,
 				E77998E52C2F648800065344 /* DateConverter.swift in Sources */,
+				E79D59222C47EB5200B4CBBD /* NetworkErrors.swift in Sources */,
 				E77556BE2C3303B7003B80FA /* TodoItem+JSON.swift in Sources */,
+				E79D59242C47EB6300B4CBBD /* NetworkProtocol.swift in Sources */,
 				E7745B612C258BEA00E584D3 /* TodoItem.swift in Sources */,
 				E77998E72C2F9A8900065344 /* DetailScreen.swift in Sources */,
 				E7745B892C2ADCB600E584D3 /* SubtitleView.swift in Sources */,
@@ -632,6 +676,7 @@
 				DEVELOPMENT_TEAM = KY758VGLM7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ToDoApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -668,6 +713,7 @@
 				DEVELOPMENT_TEAM = KY758VGLM7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ToDoApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
