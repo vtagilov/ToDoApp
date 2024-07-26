@@ -10,23 +10,12 @@ import FileCache
 
 final class CalendarItemsViewModel {
     var selectedItem: TodoItem?
-    private(set) var items: [TodoItem]
+    private(set) var items: [TodoItem] = []
     private(set) var itemsDict = [String: [TodoItem]]() // deadline: [item]
-    
-    private let cache: FileCache<TodoItem>
-    private let defaultFileName = "TodoItemList"
     
     private(set) lazy var uniqueDeadlines = [String]()
     
-    init() {
-        let cacheErrorHandler: (CacheError) -> Void = { error in
-            LoggerSetup.shared.logError("CacheError: \(error.errorDescription)")
-        }
-        cache = FileCache<TodoItem>(errorHandler: cacheErrorHandler)
-        cache.loadItemsFromFile(defaultFileName)
-        items = cache.items
-        reloadDict()
-    }
+    private lazy var storage = DataStorage(setItems: { self.items = $0 })
     
     func addItem(_ item: TodoItem) {
         if items.contains(where: { $0.id == item.id }) {
@@ -34,8 +23,6 @@ final class CalendarItemsViewModel {
         } else {
             items.append(item)
         }
-        cache.addItem(item)
-        cache.saveItemsToFile(defaultFileName)
         reloadDict()
     }
     
@@ -53,8 +40,6 @@ final class CalendarItemsViewModel {
             )
             items.insert(newItem, at: index)
             reloadDict()
-            cache.updateItem(newItem)
-            cache.saveItemsToFile(defaultFileName)
         }
     }
     
@@ -62,8 +47,7 @@ final class CalendarItemsViewModel {
         if let index = items.firstIndex(where: { $0.id == item.id }) {
             items.remove(at: index)
         }
-        cache.removeItem(item.id)
-        cache.saveItemsToFile(defaultFileName)
+        
         reloadDict()
     }
     
@@ -79,7 +63,7 @@ final class CalendarItemsViewModel {
         if let index = items.firstIndex(where: { $0.id == newItem.id }) {
             items[index] = newItem
         }
-        cache.updateItem(newItem)
+        
     }
     
     private func reloadDict() {

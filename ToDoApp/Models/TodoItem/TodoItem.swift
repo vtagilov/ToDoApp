@@ -7,9 +7,8 @@
 
 import Foundation
 import SwiftUI
-import FileCache
 
-struct TodoItem: Identifiable, Cashable {
+struct TodoItem: Identifiable {
     enum Importance: String {
         case unimportant
         case common

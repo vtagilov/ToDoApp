@@ -1,4 +1,5 @@
 {
+  "originHash" : "4d2c659b0f1376602070ba47fa2aca2d46b0881dfdfc8c82dda35001105dc1fc",
   "pins" : [
     {
       "identity" : "cocoalumberjack",
@@ -14,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vtagilov/FileCache/",
       "state" : {
-        "revision" : "af488d9ab4ce5af3b4c38a5aeae510d31bec9d0a",
-        "version" : "2.0.0"
+        "revision" : "b3817d4c29cf4d1bf093f1419140f592fdf8b72e",
+        "version" : "3.0.0"
       }
     },
     {
@@ -28,5 +29,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

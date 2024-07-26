@@ -65,7 +65,7 @@ struct MainScreen: View {
             .fullScreenCover(
                 isPresented: $isShowingCalendarScreen,
                 onDismiss: {
-                    viewModel.reloadItemsFromCache()
+                    viewModel.getItems()
                 },
                 content: {
                     CalendarViewControllerWrapper()

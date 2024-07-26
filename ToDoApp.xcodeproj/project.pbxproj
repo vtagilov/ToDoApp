@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		76B8F57EE3458C15BB8E19F9 /* libPods-ToDoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD45AE69ACF0FCB6D0DC066 /* libPods-ToDoApp.a */; };
-		E75EB5A42C405ACA00723E80 /* FileCache in Frameworks */ = {isa = PBXBuildFile; productRef = E75EB5A32C405ACA00723E80 /* FileCache */; };
 		E75EB5A72C41C97E00723E80 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75EB5A62C41C97E00723E80 /* URLSession.swift */; };
 		E7745B532C25692400E584D3 /* ToDoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B522C25692400E584D3 /* ToDoApp.swift */; };
 		E7745B572C25692600E584D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7745B562C25692600E584D3 /* Assets.xcassets */; };
@@ -22,6 +21,10 @@
 		E7745B892C2ADCB600E584D3 /* SubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745B882C2ADCB600E584D3 /* SubtitleView.swift */; };
 		E7745BA72C2EC58C00E584D3 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745BA62C2EC58C00E584D3 /* OptionsView.swift */; };
 		E7745BAA2C2EC9CC00E584D3 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7745BA92C2EC9CC00E584D3 /* View.swift */; };
+		E77508002C53D232005D78A1 /* FileCache in Frameworks */ = {isa = PBXBuildFile; productRef = E77507FF2C53D232005D78A1 /* FileCache */; };
+		E77508022C53D33C005D78A1 /* TodoItem+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77508012C53D33C005D78A1 /* TodoItem+Persistence.swift */; };
+		E77508042C53EB60005D78A1 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77508032C53EB60005D78A1 /* DataStorage.swift */; };
+		E775080A2C54674F005D78A1 /* FileCache in Frameworks */ = {isa = PBXBuildFile; productRef = E77508092C54674F005D78A1 /* FileCache */; };
 		E77556BC2C330363003B80FA /* TodoItem+CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77556BB2C330363003B80FA /* TodoItem+CSV.swift */; };
 		E77556BE2C3303B7003B80FA /* TodoItem+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77556BD2C3303B7003B80FA /* TodoItem+JSON.swift */; };
 		E77556D12C337A46003B80FA /* TodoItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77556D02C337A46003B80FA /* TodoItemsViewModel.swift */; };
@@ -74,6 +77,8 @@
 		E7745B882C2ADCB600E584D3 /* SubtitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleView.swift; sourceTree = "<group>"; };
 		E7745BA62C2EC58C00E584D3 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 		E7745BA92C2EC9CC00E584D3 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		E77508012C53D33C005D78A1 /* TodoItem+Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+Persistence.swift"; sourceTree = "<group>"; };
+		E77508032C53EB60005D78A1 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		E77556BB2C330363003B80FA /* TodoItem+CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CSV.swift"; sourceTree = "<group>"; };
 		E77556BD2C3303B7003B80FA /* TodoItem+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+JSON.swift"; sourceTree = "<group>"; };
 		E77556D02C337A46003B80FA /* TodoItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemsViewModel.swift; sourceTree = "<group>"; };
@@ -101,7 +106,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E75EB5A42C405ACA00723E80 /* FileCache in Frameworks */,
+				E77508002C53D232005D78A1 /* FileCache in Frameworks */,
+				E775080A2C54674F005D78A1 /* FileCache in Frameworks */,
 				E77557082C3C23BB003B80FA /* CocoaLumberjackSwift in Frameworks */,
 				E775570A2C3C23BB003B80FA /* CocoaLumberjackSwiftLogBackend in Frameworks */,
 				E77557062C3C23BB003B80FA /* CocoaLumberjack in Frameworks */,
@@ -252,6 +258,7 @@
 				E7745B602C258BEA00E584D3 /* TodoItem.swift */,
 				E77556BB2C330363003B80FA /* TodoItem+CSV.swift */,
 				E77556BD2C3303B7003B80FA /* TodoItem+JSON.swift */,
+				E77508012C53D33C005D78A1 /* TodoItem+Persistence.swift */,
 			);
 			path = TodoItem;
 			sourceTree = "<group>";
@@ -306,6 +313,7 @@
 			children = (
 				E775570B2C3C3D99003B80FA /* LoggerSetup.swift */,
 				E77998E42C2F648800065344 /* DateConverter.swift */,
+				E77508032C53EB60005D78A1 /* DataStorage.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -360,7 +368,8 @@
 				E77557052C3C23BB003B80FA /* CocoaLumberjack */,
 				E77557072C3C23BB003B80FA /* CocoaLumberjackSwift */,
 				E77557092C3C23BB003B80FA /* CocoaLumberjackSwiftLogBackend */,
-				E75EB5A32C405ACA00723E80 /* FileCache */,
+				E77507FF2C53D232005D78A1 /* FileCache */,
+				E77508092C54674F005D78A1 /* FileCache */,
 			);
 			productName = ToDoApp;
 			productReference = E7745B4F2C25692400E584D3 /* ToDoApp.app */;
@@ -414,7 +423,7 @@
 			mainGroup = E7745B462C25692400E584D3;
 			packageReferences = (
 				E77557042C3C23BB003B80FA /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
-				E75EB5A22C405ACA00723E80 /* XCRemoteSwiftPackageReference "FileCache" */,
+				E77508082C54674F005D78A1 /* XCRemoteSwiftPackageReference "FileCache" */,
 			);
 			productRefGroup = E7745B502C25692400E584D3 /* Products */;
 			projectDirPath = "";
@@ -508,8 +517,10 @@
 				E77556FF2C389398003B80FA /* CalendarItemsView.swift in Sources */,
 				E77556DB2C37FBB4003B80FA /* TodoItemCell.swift in Sources */,
 				E7745BA72C2EC58C00E584D3 /* OptionsView.swift in Sources */,
+				E77508022C53D33C005D78A1 /* TodoItem+Persistence.swift in Sources */,
 				E7745B872C2ADC9B00E584D3 /* ItemView.swift in Sources */,
 				E775570C2C3C3D99003B80FA /* LoggerSetup.swift in Sources */,
+				E77508042C53EB60005D78A1 /* DataStorage.swift in Sources */,
 				E7745B7E2C29BD8700E584D3 /* MainScreen.swift in Sources */,
 				E7745B762C26F16400E584D3 /* Colors.swift in Sources */,
 				E77556D12C337A46003B80FA /* TodoItemsViewModel.swift in Sources */,
@@ -809,12 +820,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E75EB5A22C405ACA00723E80 /* XCRemoteSwiftPackageReference "FileCache" */ = {
+		E77508082C54674F005D78A1 /* XCRemoteSwiftPackageReference "FileCache" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vtagilov/FileCache/";
 			requirement = {
-				kind = exactVersion;
-				version = 2.0.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
 			};
 		};
 		E77557042C3C23BB003B80FA /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
@@ -828,9 +839,13 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E75EB5A32C405ACA00723E80 /* FileCache */ = {
+		E77507FF2C53D232005D78A1 /* FileCache */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E75EB5A22C405ACA00723E80 /* XCRemoteSwiftPackageReference "FileCache" */;
+			productName = FileCache;
+		};
+		E77508092C54674F005D78A1 /* FileCache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E77508082C54674F005D78A1 /* XCRemoteSwiftPackageReference "FileCache" */;
 			productName = FileCache;
 		};
 		E77557052C3C23BB003B80FA /* CocoaLumberjack */ = {

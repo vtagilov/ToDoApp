@@ -15,7 +15,7 @@ public enum NetworkError: LocalizedError {
     case creationResponseError
     case badServerResponse
     
-    public var errorDescription: String? {
+    public var errorDescription: String {
         switch self {
         case .invalidURL:
             return "Failed to create a valid URL."
