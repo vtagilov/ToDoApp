@@ -11,194 +11,109 @@ import FileCache
 final class NetworkService: NSObject, NetworkProtocol {
     private let baseURL = "https://hive.mrdekk.ru/todo/list"
     private let token = "Maeglin"
-    private let isDirtyKey = "isDirty"
     private var revision: Int?
-    private let cache = FileCache<TodoItem>(errorHandler: { error in
-        LoggerSetup.shared.logError("CacheError: \(error.errorDescription)")
-    })
-    private let cacheFileName = "TodoItemList"
-    weak var viewModel: TodoItemsViewModel?
     
-    func getItemsList(completion: @escaping ([TodoItem]?, Error?) -> Void) {
-        let requestCompletion: (ListNetworkResponseModel?, Error?) -> Void = { responce, error in
-            DispatchQueue.main.async {
-                guard let networkList = responce?.list else {
-                    guard error == nil else {
-                        completion(nil, error)
-                        return
-                    }
-                    completion(nil, NetworkError.badServerResponse)
+    private let listRequestCompletion: (
+        _ completion: @escaping ([TodoItem]?, Error?) -> Void,
+        ListNetworkResponseModel?,
+        Error?
+    ) -> Void = { completion, responce, error in
+        DispatchQueue.main.async {
+            guard let networkList = responce?.list else {
+                guard error == nil else {
+                    completion(nil, error)
                     return
                 }
-                completion(networkList.map({ $0.getTodoItem() }), nil)
+                completion(nil, NetworkError.badServerResponse)
+                return
             }
+            completion(networkList.map({ $0.getTodoItem() }), nil)
         }
-        
+    }
+    
+    private let itemRequestCompletion: (
+        _ completion: @escaping (TodoItem?, Error?) -> Void,
+        ItemNetworkResponseModel?,
+        Error?
+    ) -> Void = { completion, response, error in
+        DispatchQueue.main.async {
+            if let error = error {
+                completion(nil, error)
+            }
+            guard let networkItem = response?.element else {
+                completion(nil, NetworkError.badServerResponse)
+                return
+            }
+            completion(networkItem.getTodoItem(), nil)
+        }
+    }
+    
+    func getItemsList(completion: @escaping ([TodoItem]?, Error?) -> Void) {
         makeUniversalRequest(
             type: .GET,
             isRevisionNeeded: false,
-            completion: requestCompletion
+            completion: { responce, error in
+                self.listRequestCompletion(completion, responce, error)
+            }
         )
     }
     
     func updateItemList(itemList: [TodoItem], completion: @escaping ([TodoItem]?, Error?) -> Void) {
-        let requestCompletion: (ListNetworkResponseModel?, Error?) -> Void = { response, error in
-            DispatchQueue.main.async {
-                guard let networkList = response?.list else {
-                    UserDefaults.standard.setValue(true, forKey: self.isDirtyKey)
-                    itemList.forEach({ self.cache.addItem($0) })
-                    self.cache.saveItemsToFile(self.cacheFileName)
-                    guard error == nil else {
-                        completion(nil, error)
-                        return
-                    }
-                    completion(nil, NetworkError.badServerResponse)
-                    return
-                }
-                completion(networkList.map({ $0.getTodoItem() }), nil)
-                UserDefaults.standard.setValue(false, forKey: self.isDirtyKey)
-            }
-        }
-        
         makeUniversalRequest(
             type: .PATCH,
-            bodyModel: ListNetworkRequestModel(list: itemList.map({ ItemNetworkModel($0) })),
+            bodyModel: ListNetworkRequestModel(
+                list: itemList.map({ ItemNetworkModel($0) })
+            ),
             isRevisionNeeded: true,
-            completion: requestCompletion
+            completion: { responce, error in
+                self.listRequestCompletion(completion, responce, error)
+            }
         )
     }
 
     func getItem(id: String, completion: @escaping (TodoItem?, Error?) -> Void) {
-        let requestCompletion: (ItemNetworkResponseModel?, Error?) -> Void = { response, error in
-            DispatchQueue.main.async {
-                guard let networkItem = response?.element else {
-                    UserDefaults.standard.setValue(true, forKey: self.isDirtyKey)
-                    guard error == nil else {
-                        completion(nil, error)
-                        return
-                    }
-                    completion(nil, NetworkError.badServerResponse)
-                    return
-                }
-                if UserDefaults.standard.bool(forKey: self.isDirtyKey) {
-                    self.updateItemList(itemList: self.cache.items, completion: { items,_ in
-                        if items != nil {
-                            self.viewModel?.reloadItemsFromCache()
-                            self.cache.items.forEach({ self.cache.removeItem($0.id) })
-                        }
-                    })
-                    self.cache.items.forEach({ self.cache.removeItem($0.id) })
-                }
-                completion(networkItem.getTodoItem(), nil)
-            }
-        }
-        
         makeUniversalRequest(
             type: .GET,
             id: id,
             isRevisionNeeded: true,
-            completion: requestCompletion
+            completion: { responce, error in
+                self.itemRequestCompletion(completion, responce, error)
+            }
         )
     }
     
     func addItem(_ item: TodoItem, completion: @escaping (TodoItem?, Error?) -> Void) {
-        let requestCompletion: (ItemNetworkResponseModel?, Error?) -> Void = { response, error in
-            DispatchQueue.main.async {
-                guard let networkItem = response?.element else {
-                    UserDefaults.standard.setValue(true, forKey: self.isDirtyKey)
-                    guard error == nil else {
-                        completion(nil, error)
-                        return
-                    }
-                    completion(nil, NetworkError.badServerResponse)
-                    return
-                }
-                if UserDefaults.standard.bool(forKey: self.isDirtyKey) {
-                    self.updateItemList(itemList: self.cache.items, completion: { items,_ in
-                        if items != nil {
-                            self.viewModel?.reloadItemsFromCache()
-                            self.cache.items.forEach({ self.cache.removeItem($0.id) })
-                        }
-                    })
-                    self.cache.items.forEach({ self.cache.removeItem($0.id) })
-                }
-                completion(networkItem.getTodoItem(), nil)
-            }
-        }
-        
         makeUniversalRequest(
             type: .POST,
             bodyModel: ItemNetworkRequestModel(element: ItemNetworkModel(item)),
             isRevisionNeeded: true,
-            completion: requestCompletion
+            completion: { responce, error in
+                self.itemRequestCompletion(completion, responce, error)
+            }
         )
     }
     
     func updateItem(_ item: TodoItem, completion: @escaping (TodoItem?, Error?) -> Void) {
-        let requestCompletion: (ItemNetworkResponseModel?, Error?) -> Void = { response, error in
-            DispatchQueue.main.async {
-                guard let networkItem = response?.element else {
-                    UserDefaults.standard.setValue(true, forKey: self.isDirtyKey)
-                    guard error == nil else {
-                        completion(nil, error)
-                        return
-                    }
-                    completion(nil, NetworkError.badServerResponse)
-                    return
-                }
-                if UserDefaults.standard.bool(forKey: self.isDirtyKey) {
-                    self.updateItemList(itemList: self.cache.items, completion: { items,_ in
-                        if items != nil {
-                            self.viewModel?.reloadItemsFromCache()
-                            self.cache.items.forEach({ self.cache.removeItem($0.id) })
-                        }
-                    })
-                    self.cache.items.forEach({ self.cache.removeItem($0.id) })
-                }
-                completion(networkItem.getTodoItem(), nil)
-            }
-        }
-        
         makeUniversalRequest(
             type: .PUT,
             bodyModel: ItemNetworkRequestModel(element: ItemNetworkModel(item)),
             id: item.id,
             isRevisionNeeded: true,
-            completion: requestCompletion
+            completion: { responce, error in
+                self.itemRequestCompletion(completion, responce, error)
+            }
         )
     }
     
     func removeItem(_ item: TodoItem, completion: @escaping (TodoItem?, Error?) -> Void) {
-        let requestCompletion: (ItemNetworkResponseModel?, Error?) -> Void = { response, error in
-            DispatchQueue.main.async {
-                guard let networkItem = response?.element else {
-                    UserDefaults.standard.setValue(true, forKey: self.isDirtyKey)
-                    guard error == nil else {
-                        completion(nil, error)
-                        return
-                    }
-                    completion(nil, NetworkError.badServerResponse)
-                    return
-                }
-                if UserDefaults.standard.bool(forKey: self.isDirtyKey) {
-                    self.updateItemList(itemList: self.cache.items, completion: { items,_ in
-                        if items != nil {
-                            self.viewModel?.reloadItemsFromCache()
-                            self.cache.items.forEach({ self.cache.removeItem($0.id) })
-                        }
-                    })
-                    self.cache.items.forEach({ self.cache.removeItem($0.id) })
-                }
-                completion(networkItem.getTodoItem(), nil)
-            }
-        }
-        
         makeUniversalRequest(
             type: .DELETE,
             bodyModel: ItemNetworkRequestModel(element: ItemNetworkModel(item)),
             id: item.id,
             isRevisionNeeded: true,
-            completion: requestCompletion
+            completion: { responce, error in
+                self.itemRequestCompletion(completion, responce, error)
+            }
         )
     }
 }
